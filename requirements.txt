@@ -1,0 +1,8 @@
+pandas>=1.5
+numpy>=1.23
+pyyaml>=6.0
+openpyxl>=3.0
+pyarrow>=10.0
+# Optional:
+# scikit-learn>=1.2
+# scipy>=1.10

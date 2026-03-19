@@ -1,0 +1,57 @@
+# config_example.yaml — example pipeline configuration
+# Run with: python -m ml_preprocessor run --config config_example.yaml --input data.csv --output output.csv
+
+pipeline:
+
+  # Step 1 — Impute missing values in numeric columns with median
+  - step: missing
+    columns: [age, salary, experience]
+    strategy: median
+
+  # Step 2 — Fill missing categorical values with most frequent value
+  - step: missing
+    columns: [city, department]
+    strategy: most_frequent
+
+  # Step 3 — Drop columns with more than 50% missing values
+  - step: missing
+    strategy: drop_cols
+    drop_threshold: 0.5
+
+  # Step 4 — Extract features from a date column
+  - step: features
+    dates:
+      - column: hire_date
+        extract: [year, month, dayofweek, is_weekend]
+        drop_original: true
+
+  # Step 5 — Discretize age into meaningful bins
+  - step: features
+    binning:
+      - column: age
+        bins: [0, 25, 35, 50, 100]
+        labels: [junior, mid, senior, executive]
+        drop_original: false
+
+  # Step 6 — Create interaction feature between salary and experience
+  - step: features
+    interactions:
+      - [salary, experience]
+
+  # Step 7 — Encode categorical columns with One-Hot Encoding
+  - step: encoding
+    columns: [city, department]
+    method: onehot
+    drop_first: true
+
+  # Step 8 — Encode ordinal column with defined order
+  - step: encoding
+    columns: [seniority]
+    method: ordinal
+    ordinal_order:
+      seniority: [intern, junior, mid, senior, lead]
+
+  # Step 9 — Scale numeric features with StandardScaler
+  - step: scaling
+    columns: [age, salary, experience, salary_x_experience]
+    method: standard

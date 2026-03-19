@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ml-preprocessor"
+version = "1.0.0"
+description = "A configurable, modular data preprocessing framework for Machine Learning pipelines"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+keywords = ["machine learning", "preprocessing", "data science", "pipeline", "feature engineering"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "pandas>=1.5",
+    "numpy>=1.23",
+    "pyyaml>=6.0",
+    "openpyxl>=3.0",
+    "pyarrow>=10.0",
+]
+
+[project.optional-dependencies]
+sklearn = ["scikit-learn>=1.2"]
+scipy   = ["scipy>=1.10"]
+full    = ["scikit-learn>=1.2", "scipy>=1.10"]
+dev     = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "jupyter>=1.0",
+    "notebook>=7.0",
+    "black>=23.0",
+    "ruff>=0.1",
+]
+
+[project.scripts]
+ml-preprocessor = "ml_preprocessor.cli:main"
+
+[project.urls]
+Homepage   = "https://github.com/your-username/ml-preprocessor"
+Repository = "https://github.com/your-username/ml-preprocessor"
+Issues     = "https://github.com/your-username/ml-preprocessor/issues"
+
+[tool.setuptools.packages.find]
+include = ["ml_preprocessor*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
